@@ -4,9 +4,6 @@ const Rubro = require('./Rubro');
 const Debt = require('./Debt');
 
 // Definir relaciones
-User.hasMany(Payment, { foreignKey: 'userId', as: 'payments' });
-Payment.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-
 User.hasMany(Debt, { foreignKey: 'userId', as: 'debts' });
 Debt.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
@@ -16,7 +13,6 @@ Debt.belongsTo(Rubro, { foreignKey: 'rubroId', as: 'rubro' });
 module.exports = {
   sequelize,
   User,
-  Payment,
   Rubro,
   Debt,
 };

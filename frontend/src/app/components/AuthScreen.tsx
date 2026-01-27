@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Building2, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
-import { Input } from './ui/Input';
+import { Input } from './ui/input';
 import { authApi } from '../../services/api';
 import { UserData } from '../../types';
 import { useAuth } from '../../hooks/useAuth';

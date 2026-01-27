@@ -1,0 +1,20 @@
+{
+  "name": "sistema-recaudacion",
+  "version": "1.0.0",
+  "description": "Sistema de Recaudación con frontend y backend",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "keywords": ["recaudacion", "frontend", "backend"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

@@ -5,7 +5,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
 import { Button } from './ui/Button';
-import { Input } from './ui/Input';
+import { Input } from './ui/input';
 import { Modal } from './ui/Modal';
 import { UserData } from '../../types';
 

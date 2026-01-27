@@ -4,9 +4,9 @@ import {
   Users, Layers, Database, LayoutDashboard, Edit2, Trash2, FileStack, Eye, Plus, Loader2
 } from 'lucide-react';
 import DashboardLayout from './DashboardLayout';
-import { Button } from './ui/Button';
-import { Input } from './ui/Input';
-import { Select } from './ui/Select';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Select } from './ui/select';
 import { Modal } from './ui/Modal';
 import { usersApi, rubrosApi, adminApi } from '../../services/api';
 import { UserData, RubroDefinition, Debt, CodeItem } from '../../types';

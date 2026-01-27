@@ -4,7 +4,7 @@ import { LogOut, Menu, ChevronDown, User as UserIcon } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useForm } from 'react-hook-form';
-import { Button } from './ui/Button';
+import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Modal } from './ui/Modal';
 import { UserData } from '../../types';

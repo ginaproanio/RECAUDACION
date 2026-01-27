@@ -4,7 +4,7 @@ import {
   Briefcase, Receipt, FileStack, UploadCloud, FileText, Check, Loader2
 } from 'lucide-react';
 import DashboardLayout from './DashboardLayout';
-import { Button } from './ui/Button';
+import { Button } from './ui/button';
 import { useDebts } from '../../hooks/useDebts';
 import { UserData, Debt, UserDocument } from '../../types';
 

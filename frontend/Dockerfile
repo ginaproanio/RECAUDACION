@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 8080
 
-CMD ["npx", "serve", "-s", "dist", "-l", "3000"]
+CMD ["node", "server.js"]

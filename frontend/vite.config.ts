@@ -16,4 +16,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // Configuración para preview (producción)
+  preview: {
+    host: true,  // Escuchar en todas las interfaces
+    port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
+  },
+  // Configuración de build para SPA
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  }
 })

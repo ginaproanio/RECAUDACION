@@ -10,6 +10,10 @@ const PORT = process.env.PORT || 8080;
 app.use(express.static(join(__dirname, 'dist')));
 
 // Para SPA - todas las rutas sirven index.html
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.get('*', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });

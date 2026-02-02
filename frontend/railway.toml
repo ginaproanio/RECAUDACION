@@ -1,5 +1,6 @@
 [build]
 builder = "NIXPACKS"
+nodeVersion = "22.22.0"
 buildCommand = "npm run build"
 
 [deploy]

@@ -36,6 +36,14 @@ app.use('/api/rubros', rubroRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Ruta raíz para confirmar que la API está en línea (limpia el log de acceso)
+app.get('/', (req, res) => {
+  res.json({ status: 'online', message: 'API del Sistema de Recaudación funcionando correctamente 🚀' });
+});
+
+// Silenciar error de favicon.ico (evita el 404 en los logs cuando se accede desde navegador)
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 // Manejo de errores global (Middleware final)
 app.use((err, req, res, next) => {
   console.error('❌ [Error Global]:', err.stack);

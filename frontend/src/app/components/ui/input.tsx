@@ -36,8 +36,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
       </div>
     );
-  }
-);
 
 Input.displayName = 'Input';
 

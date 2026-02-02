@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_URL || 'http://localhost:3001/api')
+  : '/api'; // En producción, usar rutas relativas para que pasen por el proxy
 
 // Types for API responses
 export interface UserData {

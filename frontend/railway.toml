@@ -13,3 +13,4 @@ restartPolicyMaxRetries = 10
 [environments]
 [environments.production]
 NODE_ENV = "production"
+VITE_API_URL = "https://backend-production-a579.up.railway.app/api"

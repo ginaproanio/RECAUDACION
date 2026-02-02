@@ -1,23 +1,28 @@
 import express from 'express';
+import path from 'path';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-const PORT = process.env.PORT || 8080;
 
-// Servir archivos estáticos del build de Vite
-app.use(express.static(join(__dirname, 'dist')));
+// Railway inyecta el puerto automáticamente a través de la variable de entorno PORT
+const port = process.env.PORT || 8080;
 
-// Para SPA - todas las rutas sirven index.html
+// Servir los archivos estáticos generados por el build (carpeta 'dist')
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Endpoint de salud requerido por Railway (definido en railway.toml)
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
+// Manejar cualquier otra ruta devolviendo index.html (para SPA/React Router)
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });

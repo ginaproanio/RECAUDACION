@@ -52,12 +52,12 @@ const User = sequelize.define('User', {
     allowNull: true,
   },
   codigos: {
-    type: DataTypes.JSON, // Array of CodeItem
+    type: DataTypes.JSONB, // Cambiado a JSONB para permitir consultas con Op.contains
     allowNull: false,
     defaultValue: [],
   },
   documents: {
-    type: DataTypes.JSON, // Array of UserDocument
+    type: DataTypes.JSONB, // Cambiado a JSONB
     allowNull: true,
     defaultValue: [],
   },

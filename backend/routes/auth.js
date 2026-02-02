@@ -26,6 +26,10 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Usuario con esta cédula ya existe' });
     }
 
+    // Normalizar códigos para asegurar estructura JSONB correcta [{ valor: "..." }]
+    // Si viene ["123"], lo convierte. Si ya es objeto, lo deja.
+    const codigosNormalizados = codigos.map(c => (typeof c === 'string' ? { valor: c } : c));
+
     // Hash de contraseña (default: cédula)
     const hashedPassword = await bcrypt.hash(cedula, 12);
 
@@ -40,7 +44,7 @@ router.post('/register', async (req, res) => {
       tieneDiscapacidad: tieneDiscapacidad || false,
       porcentajeDiscapacidad,
       tipoDiscapacidad,
-      codigos,
+      codigos: codigosNormalizados,
     });
 
     // Generar token JWT

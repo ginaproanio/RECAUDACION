@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const { User, Debt } = require('../models');
 const router = express.Router();
 
@@ -9,9 +10,15 @@ router.post('/', async (req, res) => {
     if (!codigos || codigos.length === 0) {
       return res.status(400).json({ error: 'Debe asignar al menos un código de propiedad.' });
     }
+
+    // Normalizar códigos
+    const codigosNormalizados = codigos.map(c => (typeof c === 'string' ? { valor: c } : c));
+
+    // Hash de contraseña (default: cédula)
+    const hashedPassword = await bcrypt.hash(cedula, 12);
     const user = await User.create({
       cedula,
-      password: cedula, // Default password
+      password: hashedPassword,
       nombres,
       apellidos,
       email,
@@ -20,7 +27,7 @@ router.post('/', async (req, res) => {
       tieneDiscapacidad,
       porcentajeDiscapacidad,
       tipoDiscapacidad,
-      codigos,
+      codigos: codigosNormalizados,
     });
     res.status(201).json(user);
   } catch (error) {
@@ -36,9 +43,11 @@ router.post('/bulk', async (req, res) => {
     const users = [];
     for (const line of lines) {
       const [cedula, nombres, apellidos, email, celular, fecha, ...codigos] = line.split(',');
+      // Hash de contraseña (default: cédula)
+      const hashedPassword = await bcrypt.hash(cedula, 12);
       users.push({
         cedula,
-        password: cedula,
+        password: hashedPassword,
         nombres,
         apellidos,
         email,

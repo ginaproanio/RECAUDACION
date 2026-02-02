@@ -7,23 +7,23 @@
 - `docs/` (documentación centralizada)
 
 ## FASE 0: ESTABILIZACIÓN (FRONTEND + CONTRATOS + MOCKS)
-- [ ] Descomponer App.tsx en componentes modulares (AuthScreen, AdminModule, ClientModule)
-- [ ] Limpiar funcionalidades ilusorias (botones falsos, estados fake, drag&drop mock)
-- [ ] Preparar componentes para integración backend
-- [ ] Crear contratos de API (interfaces TypeScript para endpoints)
-- [ ] Implementar mocks completos para desarrollo sin backend
-- [ ] Estabilizar navegación y estado local
-- [ ] Documentar flujos de usuario y casos de uso
+- [x] Descomponer App.tsx en componentes modulares (AuthScreen, AdminModule, ClientModule)
+- [x] Limpiar funcionalidades ilusorias (botones falsos, estados fake, drag&drop mock)
+- [x] Preparar componentes para integración backend
+- [x] Crear contratos de API (interfaces TypeScript para endpoints)
+- [x] Implementar mocks completos para desarrollo sin backend
+- [x] Estabilizar navegación y estado local (Definido en USER_FLOWS.md)
+- [x] Documentar flujos de usuario y casos de uso
 
 ## FASE 1: BACKEND REAL (JWT + BASE DE DATOS)
 - [x] Implementar middleware JWT reutilizable (authenticateToken, requireAdmin)
 - [x] Crear rutas de autenticación completas (/register, /login, /verify)
 - [x] Eliminar fallbacks inseguros de JWT_SECRET
-- [ ] Normalizar modelos de datos (Debt con periodoMes/periodoAnio, asociaciones con CASCADE/RESTRICT)
-- [ ] Crear endpoints REST completos: /api/users, /api/debts, /api/rubros, /api/payments, /api/documents
+- [x] Normalizar modelos de datos (Implementado en Migración Maestra: Debt, Users, Rubros)
+- [x] Crear endpoints REST completos: /api/users, /api/debts, /api/rubros, /api/payments, /api/documents
 - [ ] Implementar validación con Zod en backend
-- [ ] Agregar manejo de errores global y logging
-- [ ] Implementar encriptación de contraseñas con bcrypt
+- [x] Agregar manejo de errores global y logging
+- [x] Implementar encriptación de contraseñas con bcrypt
 - [ ] Documentar puntos de integración API
 
 ## FASE 2: INTEGRACIÓN FRONTEND-BACKEND
@@ -41,10 +41,10 @@
 
 ## FASE 3: GESTIÓN DE DATOS Y ESTADO
 - [ ] Completar modelos Sequelize con índices y validaciones
-- [ ] Implementar consultas reales a PostgreSQL
+- [x] Implementar consultas reales a PostgreSQL
 - [ ] Agregar estado global con Zustand
 - [ ] Implementar React Query para cache y sincronización
-- [ ] Crear migraciones de base de datos
+- [x] Crear migraciones de base de datos (Estrategia Migration-First implementada)
 
 ## FASE 4: CALIDAD DE CÓDIGO Y SEGURIDAD
 - [ ] Mejorar TypeScript (eliminar any, tipos estrictos)
@@ -53,7 +53,7 @@
 - [ ] Implementar pruebas de integración
 - [ ] Agregar pruebas E2E con Cypress
 - [ ] Implementar encriptación de datos sensibles
-- [ ] Configurar CORS y headers de seguridad
+- [x] Configurar CORS y headers de seguridad
 - [ ] Implementar rate limiting
 
 ## FASE 5: OPTIMIZACIÓN Y RENDIMIENTO
@@ -66,11 +66,11 @@
 
 ## FASE 6: DESPLIEGUE Y MONITOREO
 - [ ] Configurar CI/CD con GitHub Actions
-- [ ] Configurar despliegue en Railway
-- [ ] Gestionar variables de entorno seguras
+- [x] Configurar despliegue en Railway
+- [x] Gestionar variables de entorno seguras
 - [ ] Implementar logging centralizado
 - [ ] Configurar monitoreo con Sentry
-- [ ] Implementar health checks
+- [x] Implementar health checks
 - [ ] Configurar backups automáticos de base de datos
 
 ---

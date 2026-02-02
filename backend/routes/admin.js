@@ -1,11 +1,12 @@
 const express = require('express');
+const { Op } = require('sequelize'); // Importar Op para operadores
 const { User, Rubro, Debt } = require('../models');
 const router = express.Router();
 
 // Generar deudas masivas
 router.post('/generate-debts', async (req, res) => {
   try {
-    const { rubroId, alcance, periodo, modo, inicio, fin, cantidad } = req.body;
+    const { rubroId, alcance, periodoMes, periodoAnio, codigoEspecifico } = req.body;
     const rubro = await Rubro.findByPk(rubroId);
     if (!rubro) return res.status(404).json({ error: 'Rubro no encontrado' });
 
@@ -13,8 +14,9 @@ router.post('/generate-debts', async (req, res) => {
     if (alcance === 'todos') {
       users = await User.findAll();
     } else if (alcance === 'codigo') {
-      // Implementar búsqueda por código específico
-      // users = await User.findAll({ where: { codigos: { [Op.contains]: [{ valor: codigoEspecifico }] } } });
+      // Busca usuarios que contengan el código específico en su JSON de 'codigos'
+      // Esta es una consulta específica de PostgreSQL para JSONB
+      users = await User.findAll({ where: { codigos: { [Op.contains]: [{ valor: codigoEspecifico }] } } });
     }
 
     const debts = [];
@@ -32,16 +34,17 @@ router.post('/generate-debts', async (req, res) => {
           where: {
             userId: user.id,
             rubroId,
-            codigoValor: codigo.valor,
-            periodoLabel: periodo,
+            periodoMes: periodoMes,
+            periodoAnio: periodoAnio,
+            codigoValor: codigo.valor
           },
         });
         if (!existing) {
           debts.push({
             userId: user.id,
             rubroId,
-            codigoValor: codigo.valor,
-            periodoLabel: periodo,
+            periodoMes: periodoMes,
+            periodoAnio: periodoAnio,
             montoBase: rubro.montoDefecto,
             porcentajeDescuentoAplicado: porcentajeDescuento,
             descuentoValor,

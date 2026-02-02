@@ -2,15 +2,15 @@
 builder = "NIXPACKS"
 nodeVersion = "22.22.0"
 installCommand = "npm install"
-buildCommand = "echo 'No build step required'"
 
 [deploy]
+# El comando de inicio debe ser simple: solo arrancar el servidor.
 startCommand = "npm start"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
-[environments]
-[environments.production]
-NODE_ENV = "production"
+# FASE DE RELEASE: Se ejecuta después del build y antes del deploy.
+# Aquí es donde se aplican los cambios a la base de datos de forma segura.
+releaseCommand = "npm run db:migrate"

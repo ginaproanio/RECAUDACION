@@ -59,6 +59,11 @@ El sistema ha evolucionado hacia una arquitectura de **Dashboard Institucional**
     *   Perfil de usuario y notificaciones ubicados a la derecha, siguiendo el estándar web.
 *   **Unificación:** Tanto el módulo de **Administrador** como el de **Cliente** comparten exactamente el mismo componente de Layout (`DashboardLayout`), garantizando coherencia visual.
 
+### 1.3. Estrategia de Persistencia (Base de Datos)
+*   **Motor:** PostgreSQL Exclusivo. Se ha eliminado el soporte para SQLite para garantizar paridad total entre desarrollo y producción.
+*   **Ciclo de Vida:** "Migration-First". La estructura de la base de datos se gestiona **exclusivamente** a través de migraciones de Sequelize (`npm run db:migrate`).
+*   **Restricción Crítica:** Está prohibido el uso de `sequelize.sync({ force: true })` o `alter: true` en el código de arranque, ya que esto desalinea la base de datos de las migraciones controladas.
+
 ---
 
 ## 2. Modelos de Datos (Nomenclatura Estricta)

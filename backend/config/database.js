@@ -1,29 +1,27 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Use SQLite for local development/testing, PostgreSQL for production
-const isProduction = process.env.NODE_ENV === 'production';
+// AUDITORÍA DE DISEÑO: Se elimina la divergencia entre SQLite y PostgreSQL.
+// El sistema DEBE usar PostgreSQL en todos los entornos (desarrollo, pruebas, producción)
+// para garantizar la consistencia y prevenir errores en el despliegue.
+// La conexión se basa exclusivamente en la variable de entorno DATABASE_URL.
 
-let sequelize;
-
-if (isProduction) {
-  if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is required in production');
-  }
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    dialectOptions: process.env.DATABASE_URL.includes('railway.internal') ? {} : {
-      ssl: { require: true, rejectUnauthorized: false },
-    },
-    logging: false,
-  });
-} else {
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite',
-    logging: console.log,
-  });
+if (!process.env.DATABASE_URL) {
+  throw new Error('[Error de Arquitectura] La variable de entorno DATABASE_URL es obligatoria.');
 }
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    // En producción (o cualquier entorno con SSL), se requiere esta configuración.
+    // Para desarrollo local sin SSL, Sequelize es lo suficientemente inteligente para ignorarlo.
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Requerido para conexiones a servicios como Railway/Heroku
+    },
+  },
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
+});
 
 module.exports = sequelize;

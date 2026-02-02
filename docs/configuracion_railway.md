@@ -48,6 +48,7 @@ npm start
 ### Conexión en el Backend:
 - Usar la librería `pg` o `sequelize` para conectar a PostgreSQL.
 - En el código, conectar usando `process.env.DATABASE_URL`.
+- **Importante:** El sistema está configurado para usar PostgreSQL tanto en desarrollo como en producción. No usar SQLite.
 - Ejecutar migraciones automáticamente al desplegar (ver sección de scripts).
 
 ### Migraciones y Seeds:

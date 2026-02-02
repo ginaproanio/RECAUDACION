@@ -14,4 +14,7 @@ restartPolicyMaxRetries = 10
 [environments]
 [environments.production]
 NODE_ENV = "production"
+# URL pública para el build de Vite
 VITE_API_URL = "https://backend-production-a579.up.railway.app/api"
+# URL interna para el Proxy del servidor Node (server.js)
+BACKEND_URL = "https://backend-production-a579.up.railway.app"

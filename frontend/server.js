@@ -8,7 +8,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // Railway inyecta el puerto automáticamente a través de la variable de entorno PORT
-const port = process.env.PORT || 8080;
+// Usamos 3000 como fallback estándar para coincidir con backend y evitar conflictos de proxy
+const port = process.env.PORT || 3000;
 
 // Servir los archivos estáticos generados por el build (carpeta 'dist')
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -20,7 +21,11 @@ app.get('/health', (req, res) => {
 
 // Manejar cualquier otra ruta devolviendo index.html (para SPA/React Router)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });
 
 app.listen(port, '0.0.0.0', () => {

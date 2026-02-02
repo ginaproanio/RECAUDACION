@@ -32,6 +32,11 @@ app.use('/api/debts', debtRoutes);
 app.use('/api/rubros', rubroRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Healthcheck para Railway
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Ruta de prueba
 app.get('/', (req, res) => {
   res.json({ message: 'API del Sistema de Recaudación funcionando correctamente' });

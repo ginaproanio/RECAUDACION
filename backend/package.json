@@ -7,7 +7,8 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "db:migrate": "sequelize-cli db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:reset": "sequelize-cli db:migrate:undo:all && npm run db:migrate",
+    "setup": "npm run db:migrate && npm start"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

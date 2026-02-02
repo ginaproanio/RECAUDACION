@@ -27,6 +27,11 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Healthcheck para Railway (Definido antes de las rutas para respuesta rápida)
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -48,11 +53,6 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.use((err, req, res, next) => {
   console.error('❌ [Error Global]:', err.stack);
   res.status(500).json({ error: 'Algo salió mal en el servidor.', details: err.message });
-});
-
-// Healthcheck para Railway
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
 });
 
 // Puerto del servidor

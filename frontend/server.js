@@ -30,4 +30,6 @@ app.get('*', (req, res) => {
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server listening on port ${port}`);
+  console.log(`Health check endpoint available at /health`);
+  console.log(`Serving static files from ${path.join(__dirname, 'dist')}`);
 });

@@ -7,9 +7,9 @@
 - `docs/` (documentación centralizada)
 
 ## FASE 0: ESTABILIZACIÓN (FRONTEND + CONTRATOS + MOCKS)
-- [x] Descomponer App.tsx en componentes modulares (AuthScreen, AdminModule, ClientModule)
-- [x] Limpiar funcionalidades ilusorias (botones falsos, estados fake, drag&drop mock)
-- [x] Preparar componentes para integración backend
+- [ ] Descomponer App.tsx en componentes modulares (AuthScreen, AdminModule, ClientModule)
+- [ ] Limpiar funcionalidades ilusorias (botones falsos, estados fake, drag&drop mock)
+- [ ] Preparar componentes para integración backend
 - [ ] Crear contratos de API (interfaces TypeScript para endpoints)
 - [ ] Implementar mocks completos para desarrollo sin backend
 - [ ] Estabilizar navegación y estado local

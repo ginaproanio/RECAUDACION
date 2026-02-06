@@ -8,9 +8,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// URL del Backend: En Railway se configura vía variables de entorno. Localmente usa el 3000.
+// URL del Backend: En Railway se configura vía variables de entorno. Localmente usa el 3001.
 // AUDITORÍA: Usamos BACKEND_URL (para el proxy) o VITE_API_URL (como fallback) limpiando el /api final si existe.
-const rawBackendUrl = process.env.BACKEND_URL || process.env.VITE_API_URL || 'http://localhost:3000';
+const rawBackendUrl = process.env.BACKEND_URL || process.env.VITE_API_URL || 'http://localhost:3001';
 const backendUrl = rawBackendUrl.replace(/\/api\/?$/, ''); // Eliminar /api al final si viene incluido
 
 console.log(`[Arquitectura] Configuración de Proxy:`);

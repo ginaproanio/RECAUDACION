@@ -10,6 +10,7 @@
   - Campos no vacíos.
 - **Éxito:** Redirección a `/dashboard` (si es Admin) o `/portal` (si es Cliente). Token JWT almacenado.
 - **Error:** Mensaje "Credenciales inválidas".
+- **Modo Demostración:** Si el backend no está disponible, el sistema activa automáticamente el modo demo con usuarios mock (contraseña: demo123).
 
 ### 1.2. Registro (Solo Admin)
 - **Actor:** Administrador

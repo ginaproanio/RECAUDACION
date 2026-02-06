@@ -56,7 +56,7 @@ app.use((err, req, res, next) => {
 });
 
 // Puerto del servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // AUDITORÍA DE DESARROLLO: Verificación de Conexión a Base de Datos
 const checkDatabaseConnection = async () => {

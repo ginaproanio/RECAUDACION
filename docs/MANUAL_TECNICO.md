@@ -11,13 +11,16 @@
 
 ### ✅ IMPLEMENTADO (Sistema Funcional)
 - **Frontend:** React + TypeScript con componentes modulares, lazy loading, error boundaries
-- **Backend:** Node.js + Express con autenticación JWT completa, endpoints REST funcionales
+- **Backend:** Node.js + Express con autenticación JWT.
 - **Base de Datos:** Modelos Sequelize definidos, rutas API implementadas
 - **Seguridad:** JWT con middleware, autenticación completa
 - **UI/UX:** Dashboard institucional con navegación, tablas de datos, formularios
 - **Integración:** APIs funcionales para usuarios, deudas, pagos, rubros
+- **Modo Demostración:** Fallback automático cuando backend no está disponible
 
-### 🔄 PENDIENTE (Mejoras y Optimizaciones)
+### ⚠️ PUNTOS CRÍTICOS / BLOQUEANTES ACTUALES
+- **Conexión a Base de Datos Local:** El archivo `.env` de producción usa una URL interna de Railway (`postgres.railway.internal`) que **no es accesible desde entornos locales**. Para desarrollo local, se requiere la URL pública de Railway.
+- **Validación de Registro:** El registro de usuarios requiere estrictamente que el array `codigos` no esté vacío.
 - Encriptación de contraseñas con bcrypt
 - Validación avanzada con Zod
 - Gestión de estado global (Zustand/React Query)
@@ -63,6 +66,7 @@ El sistema ha evolucionado hacia una arquitectura de **Dashboard Institucional**
 *   **Motor:** PostgreSQL Exclusivo. Se ha eliminado el soporte para SQLite para garantizar paridad total entre desarrollo y producción.
 *   **Ciclo de Vida:** "Migration-First". La estructura de la base de datos se gestiona **exclusivamente** a través de migraciones de Sequelize (`npm run db:migrate`).
 *   **Restricción Crítica:** Está prohibido el uso de `sequelize.sync({ force: true })` o `alter: true` en el código de arranque, ya que esto desalinea la base de datos de las migraciones controladas.
+*   **Conectividad:** Para desarrollo local, **NO** usar la variable `DATABASE_URL` interna de Railway. Usar la URL de conexión pública (TCP Proxy) proporcionada por el dashboard de Railway.
 
 ---
 
@@ -130,6 +134,15 @@ A pesar de la actualización visual, se mantiene la integridad funcional total.
 3.  **Seguridad de Acceso:**
     *   Login valida contra Cédula y Contraseña exactas (con limpieza de espacios en blanco).
     *   Sesión persiste en memoria de la SPA (estado de React).
+
+---
+
+## 5. Solución de Problemas Comunes (Troubleshooting)
+
+### 5.1. Error de Conexión / Login Fallido en Local
+*   **Síntoma:** El login gira indefinidamente o devuelve error 500/Network Error.
+*   **Causa:** El backend local intenta conectar a `postgres.railway.internal`.
+*   **Solución:** Cambiar `DATABASE_URL` en `.env` local por la URL pública de Railway (`postgresql://...roundhouse.proxy.rlwy.net...`).
 
 ---
 

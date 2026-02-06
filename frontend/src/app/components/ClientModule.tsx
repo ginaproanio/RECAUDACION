@@ -25,11 +25,17 @@ const ClientModule: React.FC<ClientModuleProps> = ({
   onUpdateUser,
   onUploadDoc
 }) => {
-  const { processPayment, error: debtsError } = useDebts();
   const [tab, setTab] = useState('debts');
   const [selected, setSelected] = useState<string[]>([]);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Load debts when component mounts
+  useEffect(() => {
+    if (user) {
+      loadDebts();
+    }
+  }, [user, loadDebts]);
 
   const handlePayment = async () => {
     if (selected.length === 0) return;
@@ -40,10 +46,9 @@ const ClientModule: React.FC<ClientModuleProps> = ({
     try {
       const response = await processPayment(selected);
       if (response.success) {
-        // Update local state
-        onPay(selected);
         setSelected([]);
-        alert(`Pago procesado exitosamente. ID de transacción: ${response.transactionId}`);
+        toast.success(`Pago procesado exitosamente. ID: ${response.transactionId}`);
+        // Debts will be refreshed automatically by the hook
       } else {
         setError(response.message || 'Error al procesar el pago');
       }
@@ -54,8 +59,10 @@ const ClientModule: React.FC<ClientModuleProps> = ({
     }
   };
 
-  const pending = debts.filter((d) => d.usuarioId === user.id && d.estado === 'pendiente');
-  const history = debts.filter((d) => d.usuarioId === user.id && d.estado === 'pagado');
+  if (!user) return null;
+
+  const pending = realDebts.filter((d) => d.usuarioId === user.id && d.estado === 'pendiente');
+  const history = realDebts.filter((d) => d.usuarioId === user.id && d.estado === 'pagado');
   const total = pending.filter((d) => selected.includes(d.id)).reduce((a, b) => a + b.montoFinal, 0);
 
   const toggleAll = () => setSelected(selected.length === pending.length ? [] : pending.map((d) => d.id));

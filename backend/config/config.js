@@ -1,27 +1,26 @@
-require('dotenv').config();
+const path = require('path');
 
 module.exports = {
   development: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
-    dialectOptions: {
-      // Descomentar si tu base de datos local requiere SSL
-      // ssl: { require: true, rejectUnauthorized: false }
-    }
+    dialect: 'sqlite',
+    storage: path.join(__dirname, '..', 'database.sqlite'),
+    logging: console.log,
   },
   test: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres'
+    dialect: 'sqlite',
+    storage: path.join(__dirname, '..', 'database.test.sqlite'),
+    logging: false,
   },
   production: {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
+    protocol: 'postgres',
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
     },
-    logging: false // Mantiene los logs limpios en producción
-  }
+    logging: false,
+  },
 };

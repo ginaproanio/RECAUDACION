@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 const API_BASE_URL = import.meta.env.DEV
-  ? (import.meta.env.VITE_API_URL || 'http://localhost:3001/api')
+  ? (import.meta.env.VITE_API_URL || 'http://localhost:3000/api')
   : '/api'; // En producción, usar rutas relativas para que pasen por el proxy
 
 // Types for API responses
@@ -94,7 +94,7 @@ const isTokenExpired = (token: string): boolean => {
 
 const refreshToken = async (): Promise<string | null> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+    const response = await fetch(`${API_BASE_URL}/auth/refresh`, { // La ruta correcta es /auth/refresh
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -141,16 +141,25 @@ const apiRequest = async <T>(
     ...options,
   };
 
-  const response = await fetch(url, config);
+  try {
+    const response = await fetch(url, config);
 
-  if (!response.ok) {
-    const errorData: ApiError = await response.json().catch(() => ({
-      error: `HTTP ${response.status}: ${response.statusText}`,
-    }));
-    throw new Error(errorData.error);
+    if (!response.ok) {
+      const errorData: ApiError = await response.json().catch(() => ({
+        error: `HTTP ${response.status}: ${response.statusText}`,
+      }));
+      throw new Error(errorData.error);
+    }
+
+    return response.json();
+  } catch (error) {
+    // Si el backend no está disponible, mostrar mensaje informativo
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      console.warn('⚠️ Backend no disponible. El sistema funcionará con datos de demostración.');
+      throw new Error('Backend no disponible. Sistema funcionando en modo demostración.');
+    }
+    throw error;
   }
-
-  return response.json();
 };
 
 // Auth API

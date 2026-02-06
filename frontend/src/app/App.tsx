@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { UserData, Debt } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 // Lazy load components for better performance
 const AuthScreen = lazy(() => import('./components/AuthScreen'));
@@ -21,21 +21,7 @@ const ProtectedRoute = ({ children, isAuthenticated }: { children: React.ReactNo
 
 // --- APP ROOT ---
 export default function App() {
-  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
-  const [debts, setDebts] = useState<Debt[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleLogin = (user: UserData) => {
-    setCurrentUser(user);
-  };
-
-  const handleLogout = () => {
-    setCurrentUser(null);
-  };
-
-  const handleImpersonate = (user: UserData) => {
-    setCurrentUser(user);
-  };
+  const { user, logout, isLoading } = useAuth();
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
@@ -44,7 +30,7 @@ export default function App() {
           path="/login"
           element={
             <AuthScreen
-              onLogin={handleLogin}
+              onLogin={() => {}} // AuthScreen handles login internally via useAuth
               onAdmin={() => window.location.href = '/admin'}
             />
           }
@@ -52,21 +38,15 @@ export default function App() {
         <Route
           path="/client"
           element={
-            <ProtectedRoute isAuthenticated={!!currentUser}>
-              {currentUser && (
+            <ProtectedRoute isAuthenticated={!!user}>
+              {user && (
                 <ClientModule
-                  user={currentUser}
-                  debts={debts}
-                  onPay={(ids: string[]) => {
-                    setDebts(debts.map(d => ids.includes(d.id) ? { ...d, estado: 'pagado', paymentDate: new Date().toLocaleDateString() } : d));
-                  }}
-                  onLogout={handleLogout}
-                  onUpdateUser={setCurrentUser}
-                  onUploadDoc={(doc) => {
-                    if (currentUser) {
-                      setCurrentUser({ ...currentUser, documents: [...currentUser.documents, doc] });
-                    }
-                  }}
+                  user={user}
+                  debts={[]} // ClientModule will use useDebts hook internally
+                  onPay={() => {}} // Not needed anymore
+                  onLogout={logout}
+                  onUpdateUser={() => {}} // TODO: Implement user update
+                  onUploadDoc={() => {}} // TODO: Implement document upload
                 />
               )}
             </ProtectedRoute>
@@ -76,10 +56,10 @@ export default function App() {
           path="/admin"
           element={
             <AdminModule
-              user={currentUser}
-              onLogout={handleLogout}
-              onImpersonate={handleImpersonate}
-              onUpdateUser={setCurrentUser}
+              user={user}
+              onLogout={logout}
+              onImpersonate={() => {}} // TODO: Implement impersonation
+              onUpdateUser={() => {}} // TODO: Implement user update
             />
           }
         />

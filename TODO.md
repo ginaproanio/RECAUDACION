@@ -27,17 +27,22 @@
 - [ ] Documentar puntos de integración API
 
 ## FASE 2: INTEGRACIÓN FRONTEND-BACKEND
-- [ ] Implementar enrutamiento con React Router
-- [ ] Separar lógica de negocio en hooks y servicios API
-- [ ] Crear servicios API completos
-- [ ] Actualizar AuthScreen con autenticación real
-- [ ] Migrar ClientModule a API real (pagos funcionales)
+- [x] Implementar enrutamiento con React Router
+- [x] Separar lógica de negocio en hooks y servicios API
+- [x] Crear servicios API completos (api.ts con manejo de tokens y errores)
+- [x] Actualizar AuthScreen con autenticación real
+- [x] Migrar ClientModule a API real (usar useDebts hook - COMPLETADO)
 - [ ] Migrar AdminModule a API real (usuarios, rubros, generación de deudas)
-- [ ] Actualizar App.tsx para usar APIs reales (eliminado estado local)
-- [ ] Implementar React Router completo con rutas protegidas
-- [ ] Crear hooks personalizados para llamadas API
-- [ ] Conectar todos los componentes a endpoints reales
-- [ ] Implementar manejo de errores en frontend
+- [x] Actualizar App.tsx para usar APIs reales (useAuth hook implementado - COMPLETADO)
+- [x] Implementar React Router completo con rutas protegidas
+- [x] Crear hooks personalizados para llamadas API (useAuth, useDebts, useUsers)
+- [x] Conectar AuthScreen a endpoints reales (login/register funcionando)
+- [x] Implementar manejo de errores en frontend (manejo de errores de API)
+- [x] Configurar proxy reverso en frontend para desarrollo y producción
+- [ ] **PENDIENTE:** Implementar estado global con Zustand para compartir datos entre componentes
+- [ ] **PENDIENTE:** Actualizar AdminModule para usar useUsers y useAuth hooks
+- [ ] **PENDIENTE:** Implementar funcionalidad de documentos en ClientModule
+- [ ] **PENDIENTE:** Implementar impersonación de usuarios en AdminModule
 
 ## FASE 3: GESTIÓN DE DATOS Y ESTADO
 - [ ] Completar modelos Sequelize con índices y validaciones

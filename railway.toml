@@ -1,0 +1,37 @@
+[build]
+builder = "NIXPACKS"
+nodeVersion = "22.22.0"
+nodeVersion = "20"
+installCommand = "npm install"
+
+[deploy]
+# El comando de inicio debe ser simple: solo arrancar el servidor.
+startCommand = "npm start"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+# FASE DE RELEASE: Se ejecuta después del build y antes del deploy.
+# Aquí es donde se aplican los cambios a la base de datos de forma segura.
+releaseCommand = "npm run db:migrate"
+
+[environments]
+[environments.production]
+NODE_ENV = "production"
+PORT = "3000"
+JWT_SECRET = "py9iioomw3cl1grn5240zg9fpu77rnph"
+DATABASE_URL = "postgresql://postgres:isBtaUDIjpxbkPOHxOCudUOvJErfQPMQ@postgres.railway.internal:5432/railway"
+
+# PayPhone Production Credentials
+PAYPHONE_IDENTIFIER = "GkqNDnI6d0C9WqeGPj8fA"
+PAYPHONE_CLIENT_ID = "VUSU8pLHhk6v2zt1v7LEyw"
+PAYPHONE_CLIENT_SECRET = "5YJmEfzTUuBJvoIBL9UwQ"
+PAYPHONE_ENCODING_PASSWORD = "182a5f513ad04e838c6cf9856c1fad9c"
+PAYPHONE_TOKEN = "29amDUxtl3RPblVG9VhfmVcOC9zfkiaDb0mgPU5rL3qR-25y5oU1WNYJpAYegGl_VHA_XLZ8Qa_H5fzKroGXBw0WPKUGfwag7uFzeP2hJElbu3ZZafN_lIeStyQEc1xjQqwSlU-f7NPvLxjat9tkM8aQIIVIo74O-UyopnArj3m0LB2A5L9IH2MTbLzg8dw7DzBmFMHAP7LIp9d7YakxfXVGemGBhqWk0G17ttxrMUfWoD9UxZh5ileTg1tbZcBSlss4qsFuKYADyqnYjKMVn7xqiJEFo6ynIhJSeslG98NbBrWEYhK8ovEcidem4tXt-Ed_IhzmU646qAxxb7aWiQz7FqA"
+PAYPHONE_DOMAIN = "https://puntablancaecuador.com/"
+PAYPHONE_RESPONSE_URL = "https://puntablancaecuador.com/wc-api/WC_Gateway_PayPhone"
+
+# CORS Configuration
+FRONTEND_URL = "https://frontend-production-164c.up.railway.app"
+ALLOWED_ORIGINS = "https://frontend-production-164c.up.railway.app,http://localhost:5173"

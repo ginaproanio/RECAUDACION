@@ -35,6 +35,11 @@
     - Si falla la conexión (Error 500/Network): El sistema activa automáticamente el **Modo Demo**.
     - **Credenciales Demo:** Usuario: `1712345678` (o cualquiera) / Contraseña: `demo123`.
 
+#### 4. Error de Despliegue "npm ci"
+- **Error:** `npm error code EUSAGE` / `npm ci can only install packages when your package.json and package-lock.json are in sync`.
+- **Causa:** El archivo `package-lock.json` tiene versiones de dependencias que no coinciden con `package.json`.
+- **Solución:** Eliminar `package-lock.json` del repositorio para forzar una instalación limpia (`npm install`).
+
 ### 🎯 FUNCIONALIDADES CORE OPERATIVAS
 - Autenticación completa (login/logout)
 - Gestión de usuarios (CRUD, carga masiva CSV)

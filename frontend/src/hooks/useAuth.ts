@@ -40,28 +40,32 @@ export const useAuth = (): UseAuthReturn => {
 
         // Buscar usuario en mocks
         const mockUser = mockUsers.find(u => u.cedula === cedula.trim());
-        if (mockUser && password === 'demo123') { // Contraseña demo
+        
+        // PERMITIR ACCESO DEMO: Si es el usuario mock O si es cualquier usuario y el backend está muerto
+        if (password === 'demo123') {
           // Convertir mock user a UserData (asegurar tipos compatibles)
+          const userToUse = mockUser || mockUsers[0]; // Fallback al primer mock si no encuentra
+          
           const userData: UserData = {
-            id: mockUser.id,
-            cedula: mockUser.cedula,
-            nombres: mockUser.nombres,
-            apellidos: mockUser.apellidos,
-            email: mockUser.email,
-            celular: mockUser.celular,
-            fechaNacimiento: mockUser.fechaNacimiento,
-            tieneDiscapacidad: mockUser.tieneDiscapacidad,
-            porcentajeDiscapacidad: mockUser.porcentajeDiscapacidad || undefined,
-            tipoDiscapacidad: mockUser.tipoDiscapacidad || undefined,
-            codigos: mockUser.codigos.map(c => ({ id: c.valor, valor: c.valor, descripcion: c.valor })),
+            id: userToUse.id,
+            cedula: cedula.trim(), // Usar la cédula ingresada
+            nombres: userToUse.nombres,
+            apellidos: userToUse.apellidos,
+            email: userToUse.email,
+            celular: userToUse.celular,
+            fechaNacimiento: userToUse.fechaNacimiento,
+            tieneDiscapacidad: userToUse.tieneDiscapacidad,
+            porcentajeDiscapacidad: userToUse.porcentajeDiscapacidad || undefined,
+            tipoDiscapacidad: userToUse.tipoDiscapacidad || undefined,
+            codigos: userToUse.codigos.map(c => ({ id: c.valor, valor: c.valor, descripcion: c.valor })),
             documents: [],
           };
           setUser(userData);
           setIsDemoMode(true);
-          toast.success('Modo demostración activado. Bienvenido!');
+          toast.success(mockUser ? 'Modo demostración activado.' : 'Modo Demo: Usuario genérico activado.');
           return;
         } else {
-          setError('Credenciales inválidas. En modo demo usa: cédula de usuario mock + password: demo123');
+          setError('Credenciales inválidas. En modo demo usa contraseña: demo123');
           throw new Error('Credenciales inválidas');
         }
       } else {

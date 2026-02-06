@@ -1,31 +1,39 @@
 # Manual Técnico del Sistema de Recaudación
 
-**Versión:** 1.0 (Arquitectura Funcional)
-**Fecha de Actualización:** Diciembre 2024
-**Estado:** Sistema Funcional con Backend Integrado
+**Versión:** 1.1 (Revisión de Despliegue)
+**Fecha de Actualización:** Febrero 2026
+**Estado:** En Estabilización / Modo Demo Funcional
 **Tecnología:** React + TypeScript (Frontend), Node.js + Express (Backend), PostgreSQL (Base de Datos)
 
 ---
 
 ## 📊 ESTADO ACTUAL DE IMPLEMENTACIÓN
 
-### ✅ IMPLEMENTADO (Sistema Funcional)
-- **Frontend:** React + TypeScript con componentes modulares, lazy loading, error boundaries
-- **Backend:** Node.js + Express con autenticación JWT.
-- **Base de Datos:** Modelos Sequelize definidos, rutas API implementadas
-- **Seguridad:** JWT con middleware, autenticación completa
-- **UI/UX:** Dashboard institucional con navegación, tablas de datos, formularios
-- **Integración:** APIs funcionales para usuarios, deudas, pagos, rubros
-- **Modo Demostración:** Fallback automático cuando backend no está disponible
+### ✅ IMPLEMENTADO (Funcionalidad Verificada)
+- **Frontend:** Interfaz completa con React + TypeScript.
+- **Modo Demostración (Fallback):** Sistema robusto que permite operar la interfaz incluso si el backend falla (Credenciales: cualquier cédula + `demo123`).
+- **UI/UX:** Dashboard institucional, tablas de datos, formularios de registro y pago.
+- **Estructura de Base de Datos:** Modelos definidos en Sequelize.
 
-### ⚠️ PUNTOS CRÍTICOS / BLOQUEANTES ACTUALES
-- **Conexión a Base de Datos Local:** El archivo `.env` de producción usa una URL interna de Railway (`postgres.railway.internal`) que **no es accesible desde entornos locales**. Para desarrollo local, se requiere la URL pública de Railway.
-- **Validación de Registro:** El registro de usuarios requiere estrictamente que el array `codigos` no esté vacío.
-- Encriptación de contraseñas con bcrypt
-- Validación avanzada con Zod
-- Gestión de estado global (Zustand/React Query)
-- Pruebas unitarias e integración
-- CI/CD y monitoreo
+### ⚠️ PROBLEMAS CONOCIDOS Y SOLUCIONES (Troubleshooting)
+
+#### 1. Error de Despliegue en Railway (TOML Parsing)
+- **Error:** `Failed to parse TOML file: key 'build.nodeVersion' defined twice`.
+- **Causa:** Duplicidad de claves en `railway.toml`.
+- **Solución:** Se ha limpiado el archivo `railway.toml` para asegurar una única definición de `nodeVersion` y `DATABASE_URL`.
+
+#### 2. Conexión a Base de Datos (Local vs Producción)
+- **Producción (Railway):** Usa la red interna (`postgres.railway.internal`). Configuración automática en `railway.toml`.
+- **Local:** Requiere URL pública (TCP Proxy) o base de datos local.
+    - *Nota:* Si usas `localhost` en `.env`, asegúrate de tener PostgreSQL corriendo en tu máquina.
+    - *Nota:* Si quieres conectar a Railway desde local, usa la URL `roundhouse.proxy.rlwy.net` (ver dashboard de Railway).
+
+#### 3. Login Fallido
+- **Síntoma:** El usuario no puede loguearse.
+- **Solución:**
+    - Si hay conexión a BD: Usar credenciales reales.
+    - Si falla la conexión (Error 500/Network): El sistema activa automáticamente el **Modo Demo**.
+    - **Credenciales Demo:** Usuario: `1712345678` (o cualquiera) / Contraseña: `demo123`.
 
 ### 🎯 FUNCIONALIDADES CORE OPERATIVAS
 - Autenticación completa (login/logout)
@@ -137,13 +145,14 @@ A pesar de la actualización visual, se mantiene la integridad funcional total.
 
 ---
 
-## 5. Solución de Problemas Comunes (Troubleshooting)
+## 5. Estrategia de Autenticación (`useAuth.ts`)
 
-### 5.1. Error de Conexión / Login Fallido en Local
-*   **Síntoma:** El login gira indefinidamente o devuelve error 500/Network Error.
-*   **Causa:** El backend local intenta conectar a `postgres.railway.internal`.
-*   **Solución:** Cambiar `DATABASE_URL` en `.env` local por la URL pública de Railway (`postgresql://...roundhouse.proxy.rlwy.net...`).
+El hook de autenticación implementa un patrón "Fail-Safe":
+1.  Intenta login real contra API (`/api/auth/login`).
+2.  Si tiene éxito -> Guarda token y usuario real.
+3.  Si falla por error de red/servidor -> Activa **Modo Demo**.
+4.  **Modo Demo:** Permite acceso con contraseña `demo123` simulando un usuario con datos precargados (Mocks).
 
 ---
 
-**Nota Técnica:** Este documento es la única fuente de verdad. Cualquier discrepancia con documentos anteriores ("manual_tecnico_funcional.md") se resuelve a favor de este archivo y del código fuente actual en `/src/app/App.tsx`.
+**Nota Técnica:** Este documento tiene prioridad sobre versiones anteriores. Para cualquier despliegue nuevo, verificar siempre la integridad de `railway.toml` para evitar errores de parseo.

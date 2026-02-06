@@ -1,6 +1,5 @@
 [build]
 builder = "NIXPACKS"
-nodeVersion = "22.22.0"
 nodeVersion = "20"
 installCommand = "npm install"
 

@@ -1,6 +1,7 @@
 [build]
 builder = "NIXPACKS"
 nodeVersion = "22.22.0"
+nodeVersion = "20"
 installCommand = "npm install"
 
 [deploy]
@@ -20,6 +21,7 @@ releaseCommand = "npm run db:migrate"
 NODE_ENV = "production"
 PORT = "3000"
 JWT_SECRET = "py9iioomw3cl1grn5240zg9fpu77rnph"
+DATABASE_URL = "postgresql://postgres:isBtaUDIjpxbkPOHxOCudUOvJErfQPMQ@postgres.railway.internal:5432/railway"
 
 # PayPhone Production Credentials
 PAYPHONE_IDENTIFIER = "GkqNDnI6d0C9WqeGPj8fA"

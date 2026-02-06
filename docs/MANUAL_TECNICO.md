@@ -110,7 +110,7 @@ A pesar de la actualización visual, se mantiene la integridad funcional total.
     *   **Carga Masiva CSV:** Procesa texto plano para altas rápidas.
     *   **Simulación de Acceso:** Botón (Ojo) para entrar al portal como un usuario específico sin contraseña.
 
-### 3.2. Portal del Contribuyente (Cliente)
+### 3.2. Portal del Usuario (Cliente)
 *   **Obligaciones (Deudas):**
     *   Tabla interactiva con selección múltiple.
     *   Resumen financiero (KPIs) en la parte superior.

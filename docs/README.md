@@ -1,7 +1,7 @@
 
-# Sistema de Recaudación
+# Sistema de Recaudación Genérico
 
-Sistema de gestión de recaudación de impuestos y tasas municipales para entidades gubernamentales ecuatorianas. Permite la administración de usuarios, generación masiva de deudas, pagos en línea y gestión documental.
+Sistema de gestión de recaudación genérico para organizaciones y empresas. Permite la administración de usuarios, generación masiva de deudas, pagos en línea y gestión documental.
 
 ## Arquitectura
 

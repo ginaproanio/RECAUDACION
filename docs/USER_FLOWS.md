@@ -29,7 +29,7 @@
   4. Confirmar Generación.
 - **Resultado:** El sistema crea registros `Debt` para cada usuario elegible, aplicando descuentos automáticamente si corresponde.
 
-## 3. Flujo del Cliente (Pago)
+## 3. Flujo del Usuario (Pago)
 
 ### 3.1. Consulta de Deudas
 - **Actor:** Cliente
